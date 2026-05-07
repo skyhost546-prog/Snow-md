@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SNOW MD BOT - ULTIMATE DASHBOARD</title>
+
+<link rel="icon" href="https://files.catbox.moe/3gitrg.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+:root{
+--bg-dark:#050508;
+--main-red:#ff003c;
+--glow:rgba(255,0,60,0.6);
+--glass:rgba(15,15,25,0.7);
+--border:rgba(255,255,255,0.08);
+--text:#ffffff;
+--dim:#a0a0b8;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+background:radial-gradient(circle at 50% 50%,#1a050a 0%,#050508 100%);
+font-family:'Outfit',sans-serif;
+color:var(--text);
+min-height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
+overflow-x:hidden;
+}
+
+/* grid background */
+
+.web-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background-image:radial-gradient(var(--border) 1px,transparent 1px);
+background-size:40px 40px;
+opacity:.3;
+z-index:-1;
+}
+
+.container{
+width:100%;
+max-width:450px;
+padding:25px;
+}
+
+/* glass card */
+
+.glass-card{
+background:var(--glass);
+backdrop-filter:blur(30px);
+border:1px solid var(--border);
+border-radius:40px;
+padding:45px 35px;
+box-shadow:0 40px 100px rgba(0,0,0,0.8);
+text-align:center;
+animation:fadeIn 1s ease;
+}
+
+/* logo */
+
+.logo-wrapper{
+position:relative;
+width:120px;
+height:120px;
+margin:auto;
+margin-bottom:25px;
+}
+
+.logo-ring{
+position:absolute;
+inset:0;
+border:2px dashed var(--main-red);
+border-radius:50%;
+animation:rotate 10s linear infinite;
+}
+
+.logo-main{
+position:absolute;
+inset:10px;
+background:#000;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+border:2px solid var(--main-red);
+box-shadow:0 0 30px var(--glow);
+}
+
+.logo-main i{
+font-size:3.5rem;
+color:var(--main-red);
+animation:pulse 2s infinite;
+}
+
+/* title */
+
+h1{
+font-family:'Space Grotesk',sans-serif;
+font-size:2.2rem;
+letter-spacing:4px;
+margin-bottom:8px;
+background:linear-gradient(to bottom,#fff,#888);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+/* badge */
+
+.badge{
+background:rgba(255,0,60,0.1);
+border:1px solid var(--main-red);
+color:var(--main-red);
+padding:5px 15px;
+border-radius:100px;
+font-size:.65rem;
+font-weight:800;
+letter-spacing:2px;
+margin-bottom:35px;
+display:inline-block;
+}
+
+/* feature grid */
+
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:15px;
+margin-bottom:40px;
+}
+
+.feature-node{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:8px;
+}
+
+.icon-box{
+width:55px;
+height:55px;
+background:rgba(255,255,255,0.03);
+border:1px solid var(--border);
+border-radius:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+transition:.4s;
+}
+
+.feature-node:hover .icon-box{
+background:var(--main-red);
+border-color:var(--main-red);
+transform:translateY(-5px);
+box-shadow:0 10px 20px var(--glow);
+}
+
+.icon-box i{
+font-size:1.2rem;
+}
+
+.feature-node span{
+font-size:.6rem;
+color:var(--dim);
+text-transform:uppercase;
+font-weight:700;
+}
+
+/* main button */
+
+.cta-button{
+width:100%;
+padding:20px;
+border-radius:20px;
+background:var(--main-red);
+color:#fff;
+text-decoration:none;
+font-weight:800;
+font-size:1rem;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:15px;
+transition:.4s;
+margin-bottom:15px;
+box-shadow:0 15px 30px rgba(255,0,60,0.3);
+text-transform:uppercase;
+}
+
+.cta-button:hover{
+transform:scale(1.03);
+filter:brightness(1.2);
+box-shadow:0 20px 40px var(--glow);
+}
+
+/* secondary buttons */
+
+.sec-button{
+width:100%;
+padding:18px;
+border-radius:20px;
+background:rgba(255,255,255,0.02);
+border:1px solid var(--border);
+color:#fff;
+text-decoration:none;
+font-weight:600;
+font-size:.85rem;
+display:flex;
+align-items:center;
+justify-content:center;
+gap:10px;
+transition:.3s;
+}
+
+.sec-button:hover{
+background:rgba(255,255,255,0.05);
+border-color:#fff;
+}
+
+/* animations */
+
+@keyframes rotate{
+from{transform:rotate(0)}
+to{transform:rotate(360deg)}
+}
+
+@keyframes pulse{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.1)}
+}
+
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(30px)}
+to{opacity:1;transform:translateY(0)}
+}
+
+/* footer */
+
+.footer{
+margin-top:35px;
+font-size:.6rem;
+color:var(--dim);
+letter-spacing:3px;
+opacity:.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="web-bg"></div>
+
+<div class="container">
+
+<div class="glass-card">
+
+<div class="logo-wrapper">
+
+<div class="logo-ring"></div>
+
+<div class="logo-main">
+<i class="fa-solid fa-robot"></i>
+</div>
+
+</div>
+
+<h1>SNOW MD BOT</h1>
+
+<div class="badge">SYSTEM OPTIMIZED v1.0.0</div>
+
+<div class="feature-grid">
+
+<div class="feature-node">
+<div class="icon-box"><i class="fa-solid fa-bolt"></i></div>
+<span>React</span>
+</div>
+
+<div class="feature-node">
+<div class="icon-box"><i class="fa-solid fa-link-slash"></i></div>
+<span>AntiLink</span>
+</div>
+
+<div class="feature-node">
+<div class="icon-box"><i class="fa-solid fa-eye"></i></div>
+<span>Status</span>
+</div>
+
+<div class="feature-node">
+<div class="icon-box"><i class="fa-solid fa-microphone"></i></div>
+<span>Record</span>
+</div>
+
+<div class="feature-node">
+<div class="icon-box"><i class="fa-solid fa-keyboard"></i></div>
+<span>Typing</span>
+</div>
+
+<div class="feature-node">
+<div class="icon-box"><i class="fa-solid fa-phone-slash"></i></div>
+<span>AntiCall</span>
+</div>
+
+</div>
+
+<a href="/pair" class="cta-button">
+<span>Deploy Connection</span>
+<i class="fa-solid fa-arrow-right"></i>
+</a>
+
+<div style="display:flex;gap:10px">
+
+<a href="https://whatsapp.com/channel/0029VbCQ9Mh1noz48V9wET2D" class="sec-button">
+<i class="fa-brands fa-whatsapp"></i> Channel
+</a>
+
+<a href="https://wa.me/50938758188" class="sec-button">
+<i class="fa-solid fa-user"></i> Dev
+</a>
+
+</div>
+
+<div class="footer">
+ENGINEERED BY <b>JON SNOW TECHX</b>
+</div>
+
+</div>
+</div>
+
+</body>
+</html>
