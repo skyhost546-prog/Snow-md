@@ -33,6 +33,7 @@
     "file-type": "^19.6.0",
     "fs-extra": "^11.3.0",
     "moment-timezone": "^0.5.47",
+    "mongodb": "^6.0.0",
     "node-fetch": "^3.3.2",
     "node-webpmux": "^3.2.0",
     "pino": "^9.7.0",
