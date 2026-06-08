@@ -12,7 +12,9 @@ require('events').EventEmitter.defaultMaxListeners = 500;
 // --- MODIFICATION ICI ---
 // On utilise .router pour dire à Express de prendre uniquement la partie Router
 app.use('/code', spiderIndex.router); 
-
+app.get('/health', (req, res) => {
+    res.status(200).send('OK');
+});
 app.use('/pair', async (req, res, next) => {
     res.sendFile(__path + '/pair.html')
 });
