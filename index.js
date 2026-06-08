@@ -426,7 +426,7 @@ if (m.key && nslett.includes(m.key.remoteJid)) {
             //On laisse l'état actif pendant 4 secondes pour faire réaliste
             setTimeout(async () => {
                 try {
-                    await sock.sendPresenceUpdate('paused', remoteJid);
+                    await sock.sendPresenceUpdate('paused', m.key.remoteJid);
                 } catch (e) {}
             }, 4000);
         } catch (err) {
