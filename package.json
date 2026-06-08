@@ -1,0 +1,48 @@
+{
+  "name": "snow-md",
+  "version": "2.0.0",
+  "description": "Advanced WhatsApp Multi Device Bot",
+  "main": "api.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node api.js",
+    "dev": "nodemon api.js",
+    "restart": "pm2 restart snow-md",
+    "stop": "pm2 stop snow-md"
+  },
+  "keywords": [
+    "whatsapp-bot",
+    "baileys",
+    "multi-device",
+    "snow-md",
+    "jon-snow-tech"
+  ],
+  "author": "JON SNOW TECH",
+  "license": "MIT",
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10.0.0"
+  },
+  "dependencies": {
+    "@hapi/boom": "^10.0.1",
+    "@whiskeysockets/baileys": "npm:@alannxd/baileys",
+    "axios": "^1.8.2",
+    "body-parser": "^1.20.2",
+    "chalk": "^5.3.0",
+    "cheerio": "^1.0.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.2",
+    "file-type": "^19.6.0",
+    "fs-extra": "^11.3.0",
+    "moment-timezone": "^0.5.47",
+    "mongoose": "^8.0.0",
+    "node-fetch": "^3.3.2",
+    "node-webpmux": "^3.2.0",
+    "pino": "^9.7.0",
+    "qrcode-terminal": "^0.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9",
+    "pm2": "^5.4.3"
+  }
+}
