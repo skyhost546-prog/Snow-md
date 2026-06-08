@@ -611,7 +611,7 @@ if (config && config.autotyping === 'on' && !m.key.fromMe) {
                 } catch (e) {
                     reject(e);
                 }
-            }, 12000);
+             }, 3000);
         });
     } else {
         return "ALREADY_CONNECTED";
