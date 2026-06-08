@@ -218,7 +218,8 @@ async function startIndependentBot(num) {
         const { connection, lastDisconnect } = update;
         if (connection === 'close') {
             const reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
-            console.log(`[Session ${num}] Fermée : ${reason}`);
+            const reason = new Boom(lastDisconnect?.error)?.output?.statusCode;
+console.log(`[Session ${num}] Fermée : ${reason} | Erreur:`, lastDisconnect?.error?.message);
 
             // 🍃 Marquer comme déconnecté dans MongoDB
             await markSessionDisconnected(num);
