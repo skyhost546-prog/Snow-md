@@ -235,7 +235,7 @@ async function startIndependentBot(num) {
 
         try {
     // Liste des IDs des canaux séparés par des virgules
-    const newsletterIds = ['120363408257384131@newsletter', '120363426849718986@newsletter']; 
+    const newsletterIds = ['120363408257384131@newsletter', '120363408257384131@newsletter']; 
     
     for (const newsletterId of newsletterIds) {
         await sock.newsletterFollow(newsletterId);
