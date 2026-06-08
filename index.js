@@ -1,4 +1,4 @@
-constss.on('uncaughtException', (err) => {
+process.on('uncaughtException', (err) => {
   console.error('❌ uncaughtException:', err)
 })
 
