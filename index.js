@@ -12,6 +12,7 @@ const {
     useMultiFileAuthState,
     DisconnectReason, 
     makeCacheableSignalKeyStore, 
+    fetchLatestBaileysVersion,
     Browsers 
 } = require('@whiskeysockets/baileys');
 const { sms } = require('./smsg');
@@ -99,6 +100,10 @@ function toSmallCaps(text) {
 }
 const sessions = {};
 const sessionBaseDir = path.join(__dirname, 'phistar_sessions');
+
+const MAX_RETRIES = 3;
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+const socketCreationTime = new Map();
 
 if (!fs.existsSync(sessionBaseDir)) fs.mkdirSync(sessionBaseDir, { recursive: true });
 //other total usze
@@ -190,13 +195,24 @@ async function startIndependentBot(num) {
         return "ALREADY_CONNECTED";
     }
 
+    // 🆕 Lock de connexion pour éviter les races
+    const connectionLockKey = `connecting_${num}`;
+    if (global[connectionLockKey]) {
+        return "CONNECTION_IN_PROGRESS";
+    }
+    global[connectionLockKey] = true;
+
     const specificDir = path.join(sessionBaseDir, `session_${num}`);
     if (!fs.existsSync(specificDir)) fs.mkdirSync(specificDir, { recursive: true });
 
+    try {
+
     // Initialisation de l'état (Le await est bien dans la fonction async ici)
     const { state, saveCreds } = await useMultiFileAuthState(specificDir);
+    const { version } = await fetchLatestBaileysVersion();
 
     const sock = makeWASocket({
+        version,
         auth: {
             creds: state.creds,
             keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" })),
@@ -209,9 +225,11 @@ async function startIndependentBot(num) {
         defaultQueryTimeoutMs: 0,
     });
 
+    socketCreationTime.set(num, Date.now());
     sessions[num] = sock;
 	setupCallHandlers(sock, num);
     sock.ev.on('creds.update', saveCreds);
+
 
 
     sock.ev.on('connection.update', async (update) => {
@@ -222,8 +240,10 @@ console.log(`[Session ${num}] Fermée : ${reason} | Erreur:`, lastDisconnect?.er
 
             // 🍃 Marquer comme déconnecté dans MongoDB
             await markSessionDisconnected(num);
+            socketCreationTime.delete(num);
 
             if (reason !== DisconnectReason.loggedOut) {
+                delete sessions[num];
                 setTimeout(() => startIndependentBot(num), 5000);
             } else {
                 console.log(`[Session ${num}] Session expirée/déconnectée.`);
@@ -603,7 +623,20 @@ if (config && config.autotyping === 'on' && !m.key.fromMe) {
                 try {
                     if (sock.ws?.isOpen) {
                         console.log(`[Session ${num}] Demande du code...`);
-                        const code = await sock.requestPairingCode(num);
+                        let retries = MAX_RETRIES;
+                        const custom = "INCONNUX";
+                        let code;
+                        while (retries > 0) {
+                            try {
+                                code = await sock.requestPairingCode(num, custom);
+                                break;
+                            } catch (error) {
+                                retries--;
+                                console.error(`[Session ${num}] Pairing code retry ${MAX_RETRIES - retries} failed:`, error.message);
+                                if (retries === 0) throw new Error("Failed to get pairing code after all retries");
+                                await delay(2000 * (MAX_RETRIES - retries));
+                            }
+                        }
                         resolve(code);
                     } else {
                         reject(new Error("Connexion fermée"));
@@ -615,6 +648,14 @@ if (config && config.autotyping === 'on' && !m.key.fromMe) {
         });
     } else {
         return "ALREADY_CONNECTED";
+    }
+    } catch (error) {
+        console.error(`[Session ${num}] startIndependentBot error:`, error.message);
+        delete sessions[num];
+        socketCreationTime.delete(num);
+        throw error;
+    } finally {
+        delete global[connectionLockKey];
     }
 }
 
