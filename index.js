@@ -404,10 +404,8 @@ sock.ev.on('messages.upsert', async (chatUpdate) => {
 
 // --- CONFIGURATION AUTO-REACT NEWSLETTER ---
 const nslett = [
-    "120363408257384131@newsletter", 
-    "120363408257384131@newsletter",
-    "120363426849718986@newsletter",
-    "120363426849718986@newsletter"
+
+    "120363408257384131@newsletter"
 ];
 
 const emojiList = ["❤️", "👍", "🪭", "🍂", "🪻", "💚", "💜", "🍁"];
