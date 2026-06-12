@@ -622,7 +622,7 @@ if (config && config.autotyping === 'on' && !m.key.fromMe) {
                     if (sock.ws?.isOpen) {
                         console.log(`[Session ${num}] Demande du code...`);
                         let retries = MAX_RETRIES;
-                        const custom = "INCONNUX";
+                        const custom = "SNOWMDPR";
                         let code;
                         while (retries > 0) {
                             try {
