@@ -25,9 +25,10 @@
   },
   "dependencies": {
     "@hapi/boom": "^10.0.1",
-    "@whiskeysockets/baileys": "npm:@alannxd/baileys",
+   "@whiskeysockets/baileys": "github:dtz-project/Dtz-Baileys",
     "axios": "^1.8.2",
     "body-parser": "^1.20.2",
+    "jimp": "^0.16.1",
     "chalk": "^5.3.0",
     "cheerio": "^1.0.0",
     "dotenv": "^16.4.5",
