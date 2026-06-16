@@ -13,7 +13,6 @@ const {
     DisconnectReason, 
     makeCacheableSignalKeyStore, 
     fetchLatestBaileysVersion,
-    Browsers 
 } = require('@whiskeysockets/baileys');
 const { sms } = require('./smsg');
 const pino = require('pino');
@@ -160,7 +159,7 @@ async function startIndependentBot(num) {
                 keys: makeCacheableSignalKeyStore(state.keys, pino({ level: 'fatal' })),
             },
             logger: pino({ level: 'fatal' }),
-            browser: Browsers.ubuntu('Chrome'),
+            browser: ["Ubuntu", "Chrome", "20.0.04"],
             printQRInTerminal: false,
             markOnlineOnConnect: true,
             connectTimeoutMs: 60000,
